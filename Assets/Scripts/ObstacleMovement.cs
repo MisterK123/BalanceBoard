@@ -5,17 +5,20 @@ using UnityEngine;
 
 public class ObstacleMovement : MonoBehaviour
 {
-    [SerializeField] float speed;
+    GameObject player;
+    [SerializeField] float baseSpeed;
+    private movement movement_script;
     float deathTimer;
     void Start()
     {
-        
+        player = GameObject.Find("Player");
+        movement_script = player.GetComponent<movement>();
     }
 
     void Update()
     {
         deathTimer += Time.deltaTime;
-        transform.position += new Vector3(0.5f*speed, 0.088164f*speed, 0);
+        transform.position += new Vector3(0.5f*(baseSpeed+movement_script.velY), 0.088164f* (baseSpeed + movement_script.velY), 0);
         if(deathTimer > 4)
         {
             Destroy(gameObject);

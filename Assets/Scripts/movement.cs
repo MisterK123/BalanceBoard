@@ -12,7 +12,7 @@ public class movement : MonoBehaviour
     float changeX;
     float changeY;
     float velX = 0;
-    float velY= 0;
+    public float velY= 0;
     float difference;
     string[] startValues;
     public TMP_Text forwardText;
@@ -51,7 +51,8 @@ public class movement : MonoBehaviour
         // Forward accleration and deceleration
         if (currentY > 20 || currentY < -20) { changeY = (currentY * Time.deltaTime) / 20; }
         else {changeY = (0 - velY) / 10;}
-        velY += changeY;
+        if(changeY<0 || velY<= 10) { velY += changeY; }
+        
 
         // Update Objects position
         transform.position += new Vector3(0, 0, velX);
