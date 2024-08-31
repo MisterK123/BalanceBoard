@@ -51,7 +51,12 @@ public class movement : MonoBehaviour
         // Forward accleration and deceleration
         if (currentY > 20 || currentY < -20) { changeY = (currentY * Time.deltaTime) / 20; }
         else {changeY = (0 - velY) / 10;}
-        if(changeY<0 || velY<= 10) { velY += changeY; }
+        if (changeY < 0 || velY <= 10)
+        {
+            velY += changeY;
+            if (velY < 0) { velY = 0; }
+            if(velY > 10) { velY = 10; }
+        }
         
 
         // Update Objects position
