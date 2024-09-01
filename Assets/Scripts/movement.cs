@@ -6,6 +6,7 @@ using TMPro;
 using UnityEngine.UIElements;
 public class movement : MonoBehaviour
 {
+    
     SerialPort stream = new SerialPort("COM9", 57600);
     float currentX;
     float currentY;
