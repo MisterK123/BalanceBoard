@@ -36,7 +36,7 @@ public class movement : MonoBehaviour
         string startValue = stream.ReadLine();
         startValues = startValue.Split(",");
         Debug.Log("Start Values: " + startValue.ToString());
-
+        scoreText.enabled = true;
 
 
         hideDeathScreen();
@@ -102,9 +102,11 @@ public class movement : MonoBehaviour
         }
 
         //score calculation
-        if (currentX > 30 || currentX < -30) { score += 5 * Time.deltaTime; }
-        score += (1+1 * velY ) * Time.deltaTime;
-        scoreText.text = (Mathf.Floor(score * 10f) / 10f).ToString();
+        if (running) { 
+            if (currentX > 30 || currentX < -30) { score += 5 * Time.deltaTime; }
+            score += (1+1 * velY ) * Time.deltaTime;
+            scoreText.text = (Mathf.Floor(score * 10f) / 10f).ToString();
+        }
 
 
         // Update Objects position
