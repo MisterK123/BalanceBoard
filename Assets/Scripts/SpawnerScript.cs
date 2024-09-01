@@ -9,6 +9,7 @@ public class SpawnerScript : MonoBehaviour
     [SerializeField] float lowerRange;
     [SerializeField] float upperRange;
     [SerializeField] float speed;
+    [SerializeField] bool active;
     // Start is called before the first frame update
     void Start()
     {
@@ -18,14 +19,16 @@ public class SpawnerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        timer += Time.deltaTime;
-        if (timer > speed)
+        if (active)
         {
-            Instantiate(obstaclePrefab, new Vector3(-139.85f, 1.76f, Random.Range(lowerRange, upperRange)), Quaternion.identity);
-            timer = 0;
-            Debug.Log("spawned");
+            timer += Time.deltaTime;
+            if (timer > speed)
+            {
+                Instantiate(obstaclePrefab, new Vector3(-139.85f, 1.76f, Random.Range(lowerRange, upperRange)), Quaternion.identity);
+                timer = 0;
+                Debug.Log("spawned");
+            }
         }
-        
     }
 
 

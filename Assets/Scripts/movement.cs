@@ -12,6 +12,7 @@ public class movement : MonoBehaviour
     float changeX;
     float changeY;
     float velX = 0;
+    bool running = true;
     public float velY= 0;
     float difference;
     string[] startValues;
@@ -19,7 +20,16 @@ public class movement : MonoBehaviour
     public TMP_Text horizontalText;
     public TMP_Text xVelocity;
     public TMP_Text yVelocity;
+    public TMP_Text scoreText;
+    float score;
 
+    //game over stuff
+    public TMP_Text gameOverText;
+    public GameObject playAgainButton;
+    public GameObject exitButton;
+
+    public GameObject[] spawners;
+    
     void Start()
     {
         stream.Open();
@@ -27,6 +37,39 @@ public class movement : MonoBehaviour
         startValues = startValue.Split(",");
         Debug.Log("Start Values: " + startValue.ToString());
 
+
+
+        hideDeathScreen();
+        
+        
+    }
+    void OnCollisionEnter(Collision collision)
+    {
+        gameOver();
+    }
+    public void gameOver()
+    {
+        playAgainButton.SetActive(true);
+        exitButton.SetActive(true );
+        gameOverText.enabled = true;
+        for( int i = 0; i < spawners.Length; i++)
+        {
+            spawners[i].SetActive(false);
+        }
+        running = false;
+    }
+    public void hideDeathScreen()
+    {
+        playAgainButton.SetActive(false);
+        exitButton.SetActive(false);
+        gameOverText.enabled = false;
+        score = 0;
+        transform.position = new Vector3(62,36.71f, 0);
+        for (int i = 0; i < spawners.Length; i++)
+        {
+            spawners[i].SetActive(true);
+        }
+        running = true;
     }
 
     void Update()
@@ -57,10 +100,16 @@ public class movement : MonoBehaviour
             if (velY < 0) { velY = 0; }
             if(velY > 10) { velY = 10; }
         }
-        
+
+        //score calculation
+        if (currentX > 30 || currentX < -30) { score += 5 * Time.deltaTime; }
+        score += (1+1 * velY ) * Time.deltaTime;
+        scoreText.text = (Mathf.Floor(score * 10f) / 10f).ToString();
+
 
         // Update Objects position
-        transform.position += new Vector3(0, 0, velX);
+        if (running) { transform.position += new Vector3(0, 0, velX); }
+        
 
     }
 }
