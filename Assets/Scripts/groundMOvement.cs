@@ -1,14 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Rendering;
 using UnityEngine;
 
-public class ObstacleMovement : MonoBehaviour
+public class groundMOvement : MonoBehaviour
 {
     GameObject player;
     [SerializeField] float baseSpeed;
     private movement movement_script;
-    float deathTimer;
+
     void Start()
     {
         player = GameObject.Find("Player");
@@ -17,14 +16,11 @@ public class ObstacleMovement : MonoBehaviour
 
     void Update()
     {
-        if (movement_script.running == true)
-        {
-
-            deathTimer += Time.deltaTime;
+        if(movement_script.running == true) {
             transform.position += new Vector3(0.5f * (baseSpeed + movement_script.velY), 0.088164f * (baseSpeed + movement_script.velY), 0);
-            if (deathTimer > 11)
+            if (transform.position.x > 184.5f)
             {
-                Destroy(gameObject);
+                transform.position = new Vector3(-470f, -58.7f, -1.5658f);
             }
         }
     }

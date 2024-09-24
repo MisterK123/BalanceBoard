@@ -13,7 +13,7 @@ public class movement : MonoBehaviour
     float changeX;
     float changeY;
     float velX = 0;
-    bool running = true;
+    public bool running = true;
     public float velY= 0;
     float difference;
     string[] startValues;
@@ -23,7 +23,8 @@ public class movement : MonoBehaviour
     public TMP_Text yVelocity;
     public TMP_Text scoreText;
     float score;
-
+    public bool destroyObstacle = false;
+    float destroyTime;
     //game over stuff
     public TMP_Text gameOverText;
     public GameObject playAgainButton;
@@ -71,10 +72,13 @@ public class movement : MonoBehaviour
             spawners[i].SetActive(true);
         }
         running = true;
+        destroyObstacle = true;
+
     }
 
     void Update()
     {
+
         // Get info from serial port
         string value = stream.ReadLine();
         string[] values = value.Split(",");
@@ -112,7 +116,6 @@ public class movement : MonoBehaviour
 
         // Update Objects position
         if (running) { transform.position += new Vector3(0, 0, velX); }
-        
 
     }
 }
