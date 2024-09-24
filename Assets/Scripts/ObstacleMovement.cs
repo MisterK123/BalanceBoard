@@ -22,7 +22,7 @@ public class ObstacleMovement : MonoBehaviour
 
             deathTimer += Time.deltaTime;
             transform.position += new Vector3(0.5f * (baseSpeed + movement_script.velY), 0.088164f * (baseSpeed + movement_script.velY), 0);
-            if (deathTimer > 11)
+            if (deathTimer > 11 || movement_script.destroyObstacle == true)
             {
                 Destroy(gameObject);
             }

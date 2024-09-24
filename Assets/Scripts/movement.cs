@@ -24,7 +24,7 @@ public class movement : MonoBehaviour
     public TMP_Text scoreText;
     float score;
     public bool destroyObstacle = false;
-    float destroyTime;
+    float destroyTimer;
     //game over stuff
     public TMP_Text gameOverText;
     public GameObject playAgainButton;
@@ -73,13 +73,18 @@ public class movement : MonoBehaviour
         }
         running = true;
         destroyObstacle = true;
+        destroyTimer = 0;
 
     }
 
     void Update()
     {
-
-        // Get info from serial port
+        destroyTimer += 1 * Time.deltaTime;
+        if (destroyTimer > 1)
+        {
+            destroyObstacle = false;
+        }
+            // Get info from serial port
         string value = stream.ReadLine();
         string[] values = value.Split(",");
         currentX = float.Parse(values[0]) - float.Parse(startValues[0]);
