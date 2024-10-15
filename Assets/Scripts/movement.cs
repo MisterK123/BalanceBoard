@@ -7,32 +7,45 @@ using UnityEngine.UIElements;
 
 public class movement : MonoBehaviour
 {
-    
+    // Bluetooth serial setup
     SerialPort stream = new SerialPort("COM4", 57600);
+    string[] startValues;
+
+    // Movement variables
     float currentX;
     float currentY;
     float changeX;
     float changeY;
     float velX = 0;
-    public bool running = true;
-    public float velY= 0;
+    public float velY = 0;
     float difference;
-    string[] startValues;
+
+    public bool running = true;
+    
+   
+    // debug text + score
     public TMP_Text forwardText;
     public TMP_Text horizontalText;
     public TMP_Text xVelocity;
     public TMP_Text yVelocity;
     public TMP_Text scoreText;
     float score;
+
+    // respawn things
     public bool destroyObstacle = false;
     float destroyTimer;
-    //game over stuff
+    
+    //game over text
     public TMP_Text gameOverText;
     public GameObject playAgainButton;
     public GameObject exitButton;
 
     public GameObject[] spawners;
-    
+
+    // difficulty scaling
+    float difficultyTimer = 0f;
+    public float spawnerSpeed = 1.5f;
+
     void Start()
     {
         stream.Open();
@@ -61,6 +74,7 @@ public class movement : MonoBehaviour
             spawners[i].SetActive(false);
         }
         running = false;
+        spawnerSpeed = 1.5f;
     }
     public void hideDeathScreen()
     {
@@ -78,15 +92,22 @@ public class movement : MonoBehaviour
         velY = 0;
         destroyObstacle = true;
         destroyTimer = 0;
-
+        spawnerSpeed = 1.5f;
     }
 
     void Update()
     {
         destroyTimer += 1 * Time.deltaTime;
+        difficultyTimer += 1f * Time.deltaTime;
+
+        spawnerSpeed -= (spawnerSpeed * 0.02f)*Time.deltaTime;
+        Debug.Log(spawnerSpeed.ToString());
+
+        // respawn destroy obstacles
         if (destroyTimer > 1)
         {
             destroyObstacle = false;
+            
         }
             // Get info from serial port
         string value = stream.ReadLine();
