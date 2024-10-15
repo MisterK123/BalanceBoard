@@ -4,10 +4,11 @@ using UnityEngine;
 using System.IO.Ports;
 using TMPro;
 using UnityEngine.UIElements;
+
 public class movement : MonoBehaviour
 {
     
-    SerialPort stream = new SerialPort("COM9", 57600);
+    SerialPort stream = new SerialPort("COM4", 57600);
     float currentX;
     float currentY;
     float changeX;
@@ -36,6 +37,7 @@ public class movement : MonoBehaviour
     {
         stream.Open();
         string startValue = stream.ReadLine();
+        Debug.Log(startValue.ToString());
         startValues = startValue.Split(",");
         Debug.Log("Start Values: " + startValue.ToString());
         scoreText.enabled = true;
@@ -72,6 +74,8 @@ public class movement : MonoBehaviour
             spawners[i].SetActive(true);
         }
         running = true;
+        velX = 0;
+        velY = 0;
         destroyObstacle = true;
         destroyTimer = 0;
 
@@ -97,12 +101,12 @@ public class movement : MonoBehaviour
         yVelocity.text = "Y velocity: " + (Mathf.Floor(velY * 10f) / 10f).ToString();
 
         // Horizontal accleration and deceleration
-        if (currentX > 20 || currentX < -20){changeX = (currentX * Time.deltaTime) / 20;}
+        if (currentX > 5 || currentX < -5){changeX = (currentX * Time.deltaTime) / 20;}
         else {changeX = (0 - velX) / 10;}
         velX += changeX;
 
         // Forward accleration and deceleration
-        if (currentY > 20 || currentY < -20) { changeY = (currentY * Time.deltaTime) / 20; }
+        if (currentY > 10 || currentY < -10) { changeY = (currentY * Time.deltaTime) / 20; }
         else {changeY = (0 - velY) / 10;}
         if (changeY < 0 || velY <= 10)
         {
