@@ -24,7 +24,7 @@ public class SpawnerScript : MonoBehaviour
             timer += Time.deltaTime;
             if (timer > speed)
             {
-                Instantiate(obstaclePrefab, new Vector3(-139.85f, 1.76f, Random.Range(lowerRange, upperRange)), Quaternion.identity);
+                Instantiate(obstaclePrefab, new Vector3(-139.85f, -1.76f, Random.Range(lowerRange, upperRange)), Quaternion.identity);
                 timer = 0;
                 Debug.Log("spawned");
             }
